@@ -1,0 +1,40 @@
+.Auth {
+    max-width: 500px;
+    margin: auto;
+
+    form {
+        > div {
+            margin: 10px 0;
+            position: relative;
+        }
+    }
+}
+
+.root > * {
+    width: 100%;
+}
+
+.error {
+    color: red;
+    font-size: .8em;
+    width: 100%;
+    margin-top: 0;
+    display: inline-block;
+    margin-left: 0;
+}
+
+.socials {
+    display: flex;
+    justify-content: center;
+    width: auto;
+    margin: 10px;
+
+    a {
+        margin: 0 5px;
+    }
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+}
