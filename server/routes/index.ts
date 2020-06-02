@@ -11,6 +11,7 @@ import passport from 'passport';
 import '../passportRoutes/GoogleAuth';
 import '../passportRoutes/FacebookAuth'
 import '../passportRoutes/LocalAuth';
+import User from "../mongoose/AuthModel/User";
 
 passport.serializeUser(function(user, done) {
     done(null, user);
@@ -62,6 +63,22 @@ export default function (router: express.IRouter) {
             res.redirect('/403');
         }
     );
+
+    router.post('/register2', (req: express.Request, res: express.Response) => {
+        console.log(req.body.name);
+        User.findOne({ name: req.body.name }, function (err, user) {
+            if (err) {
+                console.log(err);
+                res.send(err)
+            }
+            if (!user) {
+                console.log("No User");
+                res.send('Not found')
+            }
+            res.send('Fuck')
+        });
+
+    });
 
     return router;
 }

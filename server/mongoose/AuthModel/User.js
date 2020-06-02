@@ -7,6 +7,7 @@
 
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 
 const Schema = mongoose.Schema;
 
@@ -18,7 +19,9 @@ const UsersSchema = new Schema({
 
    password: {
        type: String
-   }
+   },
+    salt: String,
+    hash: String
 });
 
 UsersSchema.methods.setPassword = function(password) {

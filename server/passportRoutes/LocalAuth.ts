@@ -4,24 +4,16 @@
  * @author Yurii Huriianov <yuhur1985@gmail.com
  * @copyright 2020
  */
-import * as localStrategy from 'passport-local';
+import * as LocalStrategy from 'passport-local';
 import passport from 'passport';
 
 import User from '../mongoose/AuthModel/User';
 
-passport.use(new localStrategy.Strategy(
-    async (username, password, done) => {
-        console.log(username, password, done);
-        await  User.findOne({ username: username },
-            (err, user) => {
-            console.log('fire');
-            if (err) {
-                return done(err);
-            }
-            if (!user) {
-                return done(null, false);
-            }
-            console.log('dddddddddd');
+passport.use(new LocalStrategy.Strategy({usernameField: 'name'},
+    function(username, _, done) {
+        User.findOne({ name: username }, function (err, user) {
+            if (err) { return done(err); }
+            if (!user) { return done(null, false); }
             return done(null, user);
         });
     }
