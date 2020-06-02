@@ -15,28 +15,30 @@ passport.use(
         clientID: config.env.GOOGLE_CLIENT_ID,
         clientSecret: config.env.GOOGLE_CLIENT_SECRET,
         callbackURL: "http://localhost:8080/auth/google/callback"
-    }, async (
-        accessToken,
-        refreshToken,
-        profile,
-        cb: (err?: Error | string | any, user?: string | any) => void) => {
-        console.log(accessToken, refreshToken);
-        try {
-            if((profile.name as any).givenName) {
-                const user = JSON.stringify({name: (profile.name as any).givenName});
-                const searchResult = await User.find({name: (profile.name as any).givenName});
+        },
+        async (
+            accessToken,
+            refreshToken,
+            profile,
+            cb: (err?: Error | string | any, user?: string | any) => void
+        ) => {
+            console.log(accessToken, refreshToken);
+            try {
+                if((profile.name as any).givenName) {
+                    const user = JSON.stringify({name: (profile.name as any).givenName});
+                    const searchResult = await User.find({name: (profile.name as any).givenName});
 
-                if (!searchResult.length) {
-                    const user = new User({name: (profile.name as any).givenName});
+                    if (!searchResult.length) {
+                        const user = new User({name: (profile.name as any).givenName});
 
-                    user.save((err, user) => {
-                        return cb(err, user);
-                    })
-                } else {
-                    return cb(null, user)
+                        await user.save((err, user) => {
+                            return cb(err, user);
+                        })
+                    } else {
+                        return cb(null, user)
+                    }
                 }
+            } catch (e) {
+               return cb(e, null);
             }
-        } catch (e) {
-           return cb(e, null);
-        }
     }));

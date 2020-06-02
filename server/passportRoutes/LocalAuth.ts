@@ -9,11 +9,23 @@ import passport from 'passport';
 
 import User from '../mongoose/AuthModel/User';
 
-passport.use(new LocalStrategy.Strategy({usernameField: 'name'},
-    function(username, _, done) {
-        User.findOne({ name: username }, function (err, user) {
-            if (err) { return done(err); }
-            if (!user) { return done(null, false); }
+passport.use(new LocalStrategy.Strategy({usernameField: 'name', passwordField: 'password'},
+    function(username, password, done) {
+        User.findOne(
+            { name: username },
+            function (err, user: any) {
+            if (err) {
+                return done(err);
+            }
+
+            if (!user) {
+                return done(null, false);
+            }
+
+            if (!user.validatePassword(password)) {
+                return done(null, false);
+            }
+
             return done(null, user);
         });
     }
