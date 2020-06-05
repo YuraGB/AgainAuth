@@ -7,29 +7,38 @@
 import * as FacebookStrategy from 'passport-facebook';
 import passport from 'passport';
 
-import User from '../mongoose/AuthModel/User';
+import User from '../mongoose/AuthModel/SocialUser';
 import config from '../config.json';
 
 passport.use(new FacebookStrategy.Strategy({
         clientID: config.env.FACEBOOK_APP_ID,
         clientSecret: config.env.FACEBOOK_APP_SECRET,
-        callbackURL: "http://localhost:8080/auth/facebook/callback"
+        callbackURL: "/auth/facebook/callback"
     },
     async (
-        accessToken, refreshToken, profile, cb) => {
-        console.log(accessToken, refreshToken);
+        _, __, profile, cb) => {
         try {
             const user = JSON.stringify({name: profile.displayName});
-            const searchResult = await User.find({name : profile.displayName});
+            const savedUser = await User.findOne({name : profile.displayName});
+            console.log("savedUser" , savedUser);
+            console.log("profile" , profile);
 
-            if (!searchResult.length) {
-                const user = new User({name: profile.displayName});
+            if (!savedUser) {
+                const user = new User(
+                    {
+                        name: profile.displayName,
+                        email: (profile.emails as any)[0].value,
+                        social: 'Facebook',
+                        _createdAt: new Date(),
+                        _updatedAt: new Date()
+                    });
 
                await user.save((err, user) => {
                     return cb(err, user);
                 })
             } else {
-                return cb(null, user)
+                savedUser._updatedAt = new Date();
+                return cb(null, user);
             }
         } catch (e) {
             return cb(e, null);

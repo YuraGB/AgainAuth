@@ -7,38 +7,55 @@
 import passport from 'passport';
 import * as GoogleStrategy from 'passport-google-oauth20';
 
-import User from '../mongoose/AuthModel/User';
+import User from '../mongoose/AuthModel/SocialUser';
 import config from '../config.json';
+
+type profileFields = {[key: string]:string};
 
 passport.use(
     new GoogleStrategy.Strategy({
         clientID: config.env.GOOGLE_CLIENT_ID,
         clientSecret: config.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:8080/auth/google/callback"
+        callbackURL: "/auth/google/callback"
         },
         async (
-            accessToken,
-            refreshToken,
+            _,
+            __,
             profile,
-            cb: (err?: Error | string | any, user?: string | any) => void
+            cb: (err?: Error | any, user?: string | any) => void
         ) => {
-            console.log(accessToken, refreshToken);
-            try {
-                if((profile.name as any).givenName) {
-                    const user = JSON.stringify({name: (profile.name as any).givenName});
-                    const searchResult = await User.find({name: (profile.name as any).givenName});
+            const {name, email, picture}: profileFields = profile._json;
 
-                    if (!searchResult.length) {
-                        const user = new User({name: (profile.name as any).givenName});
+            try {
+                if (name) {
+                    const user = JSON.stringify({name: name});
+                    const savedUser = await User.findOne({id: profile.id});
+                    if (!savedUser) {
+                        const user = new User(
+                            {
+                                id: profile.id,
+                                name: name,
+                                email: email,
+                                picture: picture,
+                                social: 'Google+',
+                                _createdAt: new Date(),
+                                _updatedAt: new Date()
+                            }
+                        );
 
                         await user.save((err, user) => {
                             return cb(err, user);
                         })
                     } else {
+                        savedUser._updatedAt = new Date();
+                        await savedUser.save();
+
                         return cb(null, user)
                     }
                 }
             } catch (e) {
                return cb(e, null);
             }
-    }));
+        }
+    )
+);

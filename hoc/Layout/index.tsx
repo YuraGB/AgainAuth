@@ -11,7 +11,7 @@ import Auxx from "../Auxx/Auxx";
 import HeaderComponent from "../../components/globalComponents/header/HeaderComponent/HeaderComponent";
 import classes from './Layout.module.css';
 
-const Layout: React.FC = (props) => {
+const Index: React.FC = (props) => {
     return (
         <Auxx>
             <HeaderComponent/>
@@ -24,4 +24,4 @@ const Layout: React.FC = (props) => {
     )
 };
 
-export default Layout;
+export default Index;

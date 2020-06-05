@@ -4,14 +4,15 @@
  * @author Yurii Huriianov <yuhur1985@gmail.com
  * @copyright 2020
  */
+import React from "react";
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { useForm } from "react-hook-form";
-import {SocialMediaIconsReact} from 'social-media-icons-react';
 
 import authStyles from './Auth.module.css';
 import {useRef} from "react";
+import SocialsComponent from "../Socials/SocialsComponent";
 
 /**
  * AuthFormComponent
@@ -32,7 +33,7 @@ const AuthFormComponent = (): JSX.Element => {
         <article>
             <section className={authStyles.Auth}>
                 <Typography variant="h4" align='center' >
-                    Login in
+                    Only trusted user
                 </Typography>
                 <form
                     className={authStyles.root}
@@ -55,19 +56,13 @@ const AuthFormComponent = (): JSX.Element => {
                         id="user-auth"
                         name='password'
                         inputRef={register({required: true})}
-                        label="Passport"
+                        label="Password"
                         autoFocus={true}
-                        placeholder={'passport'}
+                        placeholder={'password'}
                     />
                     {errors.name && <span className={authStyles.error}>'This field is required.'</span>}
 
-                    <div className={authStyles.socials}>
-                        <SocialMediaIconsReact icon="facebook" iconSize={32} url="/facebook"/>
-                        <SocialMediaIconsReact icon="linkedin" iconSize={32} url="/linkedin"/>
-                        <SocialMediaIconsReact icon="github" iconSize={32} url="/github"/>
-                        <SocialMediaIconsReact icon="googleplus" iconSize={32} url="/google"/>
-                    </div>
-
+                    <SocialsComponent/>
 
                     <div className={authStyles.actions}>
                         <Button

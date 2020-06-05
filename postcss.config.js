@@ -7,6 +7,7 @@ module.exports = {
         'postcss-nested': {},
         'postcss-nesting': {},
         'postcss-extend': {},
+        'postcss-color-function': {},
         'autoprefixer': {},
     }
 };
