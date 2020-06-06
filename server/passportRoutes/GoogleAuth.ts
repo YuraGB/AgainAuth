@@ -9,8 +9,7 @@ import * as GoogleStrategy from 'passport-google-oauth20';
 
 import User from '../mongoose/AuthModel/SocialUser';
 import config from '../config.json';
-
-type profileFields = {[key: string]:string};
+import {IprofileFields} from "./system";
 
 passport.use(
     new GoogleStrategy.Strategy({
@@ -24,35 +23,34 @@ passport.use(
             profile,
             cb: (err?: Error | any, user?: string | any) => void
         ) => {
-            const {name, email, picture}: profileFields = profile._json;
+            const {name = '', email = 'without email', picture = ''} = <IprofileFields>profile._json;
 
             try {
-                if (name) {
-                    const user = JSON.stringify({name: name});
-                    const savedUser = await User.findOne({id: profile.id});
-                    if (!savedUser) {
-                        const user = new User(
-                            {
-                                id: profile.id,
-                                name: name,
-                                email: email,
-                                picture: picture,
-                                social: 'Google+',
-                                _createdAt: new Date(),
-                                _updatedAt: new Date()
-                            }
-                        );
+                const savedUser = await User.findOne({id: profile.id});
 
-                        await user.save((err, user) => {
-                            return cb(err, user);
-                        })
-                    } else {
-                        savedUser._updatedAt = new Date();
-                        await savedUser.save();
+                if (!savedUser) {
+                    const user = new User(
+                        {
+                            id: profile.id,
+                            name: name,
+                            email: email,
+                            picture: picture,
+                            social: 'Google+',
+                            _createdAt: new Date(),
+                            _updatedAt: new Date()
+                        }
+                    );
 
-                        return cb(null, user)
-                    }
+                    await user.save();
+                    return cb(null, user);
+                } else {
+
+                    savedUser._updatedAt = new Date();
+                    await savedUser.save();
+
+                    return cb(null, savedUser);
                 }
+
             } catch (e) {
                return cb(e, null);
             }

@@ -9,7 +9,10 @@ import passport from 'passport';
 
 import User from '../mongoose/AuthModel/User';
 
-passport.use(new LocalStrategy.Strategy({usernameField: 'name', passwordField: 'password'},
+passport.use(new LocalStrategy.Strategy({
+        usernameField: 'name',
+        passwordField: 'password'
+    },
     function(username, password, done) {
         User.findOne(
             { name: username },
