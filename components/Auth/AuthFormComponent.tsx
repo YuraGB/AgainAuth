@@ -62,8 +62,6 @@ const AuthFormComponent = (): JSX.Element => {
                     />
                     {errors.name && <span className={authStyles.error}>'This field is required.'</span>}
 
-                    <SocialsComponent/>
-
                     <div className={authStyles.actions}>
                         <Button
                             size="small"
@@ -73,6 +71,8 @@ const AuthFormComponent = (): JSX.Element => {
                             Submit
                         </Button>
                     </div>
+
+                    <SocialsComponent/>
                 </form>
             </section>
         </article>
