@@ -1,0 +1,12 @@
+.header {
+    width: auto;
+    padding: 20px;
+    margin-bottom: 40px;
+
+    p, a {
+        margin: 0;
+        text-align: center;
+        color: gray;
+        font-size: 14px;
+    }
+}

@@ -6,8 +6,12 @@ import classes from "./Social.module.css";
 const SocialsComponent = () => {
     return (
         <section>
-            <span className={classes.separator}>or</span>
-            <p className={classes.socialInventation}>You can login using socials and let me know who you are</p>
+            <span className={classes.separator}>
+                or
+            </span>
+            <p className={classes.socialInventation}>
+                You can log in using socials and let me know who you are
+            </p>
             <div className={classes.socials}>
                 <SocialMediaIconsReact icon="facebook" iconSize={32} url="/facebook"/>
                 <SocialMediaIconsReact icon="linkedin" iconSize={32} url="/linkedin"/>
