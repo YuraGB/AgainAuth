@@ -4,11 +4,14 @@
  * @author Yurii Huriianov <yuhur1985@gmail.com
  * @copyright 2020
  */
-import setRoutes from './routes';
+
 import express from 'express';
 import bodyParser from "body-parser";
 import passport from "passport";
+import favicon from 'serve-favicon';
+
 import startSessions from './sessions';
+import setRoutes from './routes';
 
 const router = express.Router();
 
