@@ -49,12 +49,13 @@ const AuthFormComponent = (): JSX.Element => {
                         inputRef={register({required: true})}
                         label="Visitor"
                         autoFocus={true}
-                        placeholder={'email or name'}
+                        placeholder={'name'}
                     />
                     {errors.name && <span className={authStyles.error}>'This field is required.'</span>}
                     <TextField
                         id="user-auth"
                         name='password'
+                        type='password'
                         inputRef={register({required: true})}
                         label="Password"
                         autoFocus={true}
