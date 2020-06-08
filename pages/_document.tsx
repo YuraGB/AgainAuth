@@ -1,3 +1,9 @@
+/**
+ * import favicon
+ *
+ * @author Yurii Huriianov <yuhur1985@gmail.com
+ * @copyright 2020
+ */
 import React from 'react';
 import Document, { Html, Head, Main, NextScript, DocumentContext, DocumentInitialProps } from 'next/document';
 

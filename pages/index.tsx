@@ -1,5 +1,5 @@
 /**
- * The Auth component
+ * The Auth Index Page
  *
  * @author Yurii Huriianov <yuhur1985@gmail.com
  * @copyright 2020

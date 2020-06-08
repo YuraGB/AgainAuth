@@ -1,3 +1,9 @@
+/**
+ * Socials section
+ *
+ * @author Yurii Huriianov <yuhur1985@gmail.com
+ * @copyright 2020
+ */
 import React from "react";
 import {SocialMediaIconsReact} from "social-media-icons-react";
 

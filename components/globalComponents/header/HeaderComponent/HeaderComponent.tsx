@@ -9,6 +9,12 @@ import React from 'react';
 
 import classes from './Header.module.css';
 
+/**
+ * HeaderComponent
+ *
+ * @constructor
+ * @return {*} JSX.Element
+ */
 const HeaderComponent:React.FC = () => {
     return (
         <header className={classes.header}>
