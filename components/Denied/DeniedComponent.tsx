@@ -2,7 +2,6 @@ import Link from "next/link";
 import React from "react";
 
 import classes from './Denied.module.css'
-import hmFace from '../../assets/oops.jpeg';
 
 const DeniedComponent = () => {
     return (
@@ -16,9 +15,6 @@ const DeniedComponent = () => {
                     you entered incorrect data please
                 </span>
                 <Link href='/'><a className={classes.link} title='back to the login'>try again</a></Link>
-            </section>
-            <section className={classes.emoji}>
-                <img src={hmFace} alt="hm-face"/>
             </section>
         </article>
     )

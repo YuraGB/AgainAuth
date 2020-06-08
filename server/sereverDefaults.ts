@@ -8,7 +8,6 @@
 import express from 'express';
 import bodyParser from "body-parser";
 import passport from "passport";
-import favicon from 'serve-favicon';
 
 import startSessions from './sessions';
 import setRoutes from './routes';
